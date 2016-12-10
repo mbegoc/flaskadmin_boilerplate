@@ -6,6 +6,7 @@ from flask_mail import Mail, email_dispatched
 from flask_user import UserManager, SQLAlchemyAdapter
 
 from models import db, User
+from admin import admin
 
 
 app = Flask(__name__)
@@ -19,7 +20,7 @@ user_db_adapter = SQLAlchemyAdapter(db, User)
 
 mail = Mail(app)
 user_manager = UserManager(user_db_adapter, app)
-# admin = Admin(app, name="Flask", template_mode="bootstrap3")
+admin.init_app(app)
 
 manager = Manager(app)
 manager.add_command("runserver", Server(
