@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
-from flask import render_template, Flask
+from flask import render_template, Flask, url_for
 from flask_script import Manager, Server
 from flask_mail import Mail, email_dispatched
 from flask_user import UserManager, SQLAlchemyAdapter
+from flask_admin import helpers as admin_helpers
 
 from models import db, User
 from admin import admin
@@ -27,6 +28,16 @@ manager.add_command("runserver", Server(
     host="0.0.0.0",
     port=5000,
 ))
+
+
+@app.context_processor
+def user_context_processor():
+    return dict(
+        admin_base_template=admin.base_template,
+        admin_view=admin.index_view,
+        h=admin_helpers,
+        get_url=url_for,
+    )
 
 
 @email_dispatched.connect

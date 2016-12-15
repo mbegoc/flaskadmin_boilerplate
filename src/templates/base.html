@@ -1,0 +1,23 @@
+{% extends "admin/base.html" %}
+
+{% block head %}
+    <style>
+        .no-margins { margin: 0px; }
+        .with-margins { margin: 10px; }
+        .col-centered { float: none; margin: 0 auto; }
+    </style>
+{% endblock %}
+
+{% block menu_links %}
+  {{ super() }}
+  <ul class="nav navbar-nav navbar-right">
+  {% if call_or_get(current_user.is_authenticated) %}
+    <li><a href="{{ url_for('user.profile') }}">{{ current_user.username }}</a></li>
+    <li><a href="{{ url_for('user.logout') }}">Sign out</a></li>
+  {% else %}
+    <li><a href="{{ url_for('user.login') }}">Sign in</a></li>
+  {% endif %}
+  </ul>
+{% endblock %}
+
+{% block body %}{% block main %}{% block content %}{% endblock %}{% endblock %}{% endblock %}

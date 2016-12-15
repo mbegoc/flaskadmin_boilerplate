@@ -6,8 +6,9 @@ Flask setup with some extension to compare with  django capabilities.
 Roadmap
 =======
 
-1. tests
-2. flask-admin setup
-3. assets and static config
-4. babel setup
-5. flask-alembic setup and first migrations
+1. assets and static config
+2. babel setup
+3. flask-alembic setup and first migrations
+4. setup of roles and authorizations for flask-admin
+5. setup of the file manager of flask-admin
+6. tests
