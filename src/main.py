@@ -5,6 +5,7 @@ from flask_script import Manager, Server
 from flask_mail import Mail, email_dispatched
 from flask_user import UserManager, SQLAlchemyAdapter
 from flask_admin import helpers as admin_helpers
+from flask_migrate import Migrate, MigrateCommand
 
 from models import db, User
 from admin import admin
@@ -16,7 +17,7 @@ app.config.from_pyfile("config/default.cfg")
 app.config.from_envvar("ENV_CONFIG_FILE", silent=True)
 
 db.init_app(app)
-# db.create_all()
+migrate = Migrate(app, db)
 user_db_adapter = SQLAlchemyAdapter(db, User)
 
 mail = Mail(app)
@@ -24,6 +25,7 @@ user_manager = UserManager(user_db_adapter, app)
 admin.init_app(app)
 
 manager = Manager(app)
+manager.add_command('db', MigrateCommand)
 manager.add_command("runserver", Server(
     host="0.0.0.0",
     port=5000,
