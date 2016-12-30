@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from flask import render_template, Flask, url_for
+from flask import render_template, Flask, url_for, send_from_directory
 from flask_script import Manager, Server
 from flask_mail import Mail, email_dispatched
 from flask_user import UserManager, SQLAlchemyAdapter
@@ -8,7 +8,7 @@ from flask_admin import helpers as admin_helpers
 from flask_migrate import Migrate, MigrateCommand
 
 from models import db, User
-from admin import admin
+from admin import admin, media_path
 
 
 app = Flask(__name__)
@@ -57,6 +57,11 @@ def index():
     point to app.
     """
     return render_template("index.html")
+
+
+@app.route("/media/<path:filename>")
+def media(filename):
+    return send_from_directory(media_path, filename)
 
 
 if __name__ == "__main__":

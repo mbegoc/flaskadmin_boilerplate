@@ -12,6 +12,7 @@
   {{ super() }}
   <ul class="nav navbar-nav navbar-right">
   {% if call_or_get(current_user.is_authenticated) %}
+    <li><img src="{{ url_for("media", filename=current_user.avatar|replace(".", "_thumb.")) }}" /></li>
     <li><a href="{{ url_for('user.profile') }}">{{ current_user.username }}</a></li>
     <li><a href="{{ url_for('user.logout') }}">Sign out</a></li>
   {% else %}

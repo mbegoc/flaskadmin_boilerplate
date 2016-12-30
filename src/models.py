@@ -37,6 +37,11 @@ class User(db.Model, UserMixin):
         unique=True
     )
 
+    avatar = db.Column(
+        db.String(200),
+        nullable=True,
+    )
+
     confirmed_at = db.Column(
         db.DateTime()
     )
