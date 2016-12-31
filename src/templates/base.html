@@ -1,11 +1,9 @@
 {% extends "admin/base.html" %}
 
 {% block head %}
-    <style>
-        .no-margins { margin: 0px; }
-        .with-margins { margin: 10px; }
-        .col-centered { float: none; margin: 0 auto; }
-    </style>
+{% assets "css" %}
+<link rel="stylesheet" href="{{ ASSET_URL}}"/>
+{% endassets %}
 {% endblock %}
 
 {% block menu_links %}

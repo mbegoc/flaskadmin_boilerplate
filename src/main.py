@@ -6,6 +6,7 @@ from flask_mail import Mail, email_dispatched
 from flask_user import UserManager, SQLAlchemyAdapter
 from flask_admin import helpers as admin_helpers
 from flask_migrate import Migrate, MigrateCommand
+from flask_assets import Environment as FlaskAssets
 
 from models import db, User
 from admin import admin, media_path
@@ -30,6 +31,10 @@ manager.add_command("runserver", Server(
     host="0.0.0.0",
     port=5000,
 ))
+
+assets = FlaskAssets(app)
+assets.register("css", app.config.get("CSS_BUNDLE"))
+# assets.register("js", app.config.get("JS_BUNDLE"))
 
 
 @app.context_processor
