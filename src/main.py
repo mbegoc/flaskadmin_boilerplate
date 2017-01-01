@@ -1,12 +1,17 @@
 #!/usr/bin/env python
 
-from flask import render_template, Flask, url_for, send_from_directory
+from flask import (render_template,
+                   Flask,
+                   url_for,
+                   send_from_directory,
+                   request)
 from flask_script import Manager, Server
 from flask_mail import Mail, email_dispatched
 from flask_user import UserManager, SQLAlchemyAdapter
 from flask_admin import helpers as admin_helpers
 from flask_migrate import Migrate, MigrateCommand
 from flask_assets import Environment as FlaskAssets
+from flask_babelex import Babel
 
 from models import db, User
 from admin import admin, media_path
@@ -35,6 +40,13 @@ manager.add_command("runserver", Server(
 assets = FlaskAssets(app)
 assets.register("css", app.config.get("CSS_BUNDLE"))
 # assets.register("js", app.config.get("JS_BUNDLE"))
+
+babel = Babel(app)
+
+
+@babel.localeselector
+def get_locale():
+    return request.accept_languages.best_match(["fr", "en"])
 
 
 @app.context_processor
