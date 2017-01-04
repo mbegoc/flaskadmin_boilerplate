@@ -100,7 +100,7 @@ setup(
     # pip to create the appropriate form of executable for the target platform.
     entry_points={
         'console_scripts': [
-            'flask=src.manage:main',
+            'flask_demo=flask_demo.manage:main',
         ],
     },
 )

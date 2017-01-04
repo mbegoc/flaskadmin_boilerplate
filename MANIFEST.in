@@ -1,0 +1,7 @@
+include README.rst
+include requirements.txt
+recursive-include flask_demo *.py
+recursive-include flask_demo/config *.cfg
+recursive-include flask_demo/templates *.html *.txt
+recursive-include flask_demo/assets_src/ *.js *.css
+recursive-include flask_demo/static/ *.jpeg *.jpg *.png *.svg

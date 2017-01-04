@@ -1,1 +1,5 @@
 __pycache__
+.webassets-cache
+.cache
+.tox
+Flask_Demo.egg-info

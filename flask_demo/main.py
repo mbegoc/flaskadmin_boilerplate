@@ -1,5 +1,12 @@
 #!/usr/bin/env python
 
+import sys
+import os
+
+wdir = os.path.realpath(os.path.join(os.path.dirname(__file__), ".."))
+if wdir not in sys.path:
+    sys.path.insert(0, wdir)
+
 from flask import (render_template,
                    Flask,
                    url_for,
@@ -13,8 +20,8 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_assets import Environment as FlaskAssets
 from flask_babelex import Babel
 
-from models import db, User
-from admin import admin, media_path
+from flask_demo.models import db, User
+from flask_demo.admin import admin, media_path
 
 
 app = Flask(__name__)

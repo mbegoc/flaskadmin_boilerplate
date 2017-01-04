@@ -8,7 +8,7 @@ from flask_admin.contrib.sqla import ModelView
 from flask_admin.contrib.fileadmin import FileAdmin
 from flask_babelex import lazy_gettext as _
 
-from models import db, User
+from flask_demo.models import db, User
 
 
 media_path = os.path.join(os.path.dirname(__file__), "media")
