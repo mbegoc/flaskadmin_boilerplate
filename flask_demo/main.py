@@ -7,21 +7,21 @@ wdir = os.path.realpath(os.path.join(os.path.dirname(__file__), ".."))
 if wdir not in sys.path:
     sys.path.insert(0, wdir)
 
-from flask import (render_template,
+from flask import (render_template,  # noqa: E402
                    Flask,
                    url_for,
                    send_from_directory,
                    request)
-from flask_script import Manager, Server
-from flask_mail import Mail, email_dispatched
-from flask_user import UserManager, SQLAlchemyAdapter
-from flask_admin import helpers as admin_helpers
-from flask_migrate import Migrate, MigrateCommand
-from flask_assets import Environment as FlaskAssets
-from flask_babelex import Babel
+from flask_script import Manager, Server  # noqa: E402
+from flask_mail import Mail, email_dispatched  # noqa: E402
+from flask_user import UserManager, SQLAlchemyAdapter  # noqa: E402
+from flask_admin import helpers as admin_helpers  # noqa: E402
+from flask_migrate import Migrate, MigrateCommand  # noqa: E402
+from flask_assets import Environment as FlaskAssets  # noqa: E402
+from flask_babelex import Babel  # noqa: E402
 
-from flask_demo.models import db, User
-from flask_demo.admin import admin, media_path
+from flask_demo.models import db, User  # noqa: E402
+from flask_demo.admin import admin, media_path  # noqa: E402
 
 
 app = Flask(__name__)
