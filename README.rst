@@ -15,14 +15,13 @@ Bugs to fix
 Roadmap
 =======
 
-1. See how to activate csrf token protection
-2. See how to manage related items: the default with "tags" is pretty cool,
+1. See how to manage related items: the default with "tags" is pretty cool,
    at least for simple cases. See what are inline forms. It seems there is no
    way to popup a form create/edit linked items. In some cases, it could be
    necessary.
-3. Write more tests
-4. See how to manage published content - explore idea of publication table
-5. implement fixtures support with flask-fixtures. It does not seem to support
+2. Write more tests
+3. See how to manage published content - explore idea of publication table
+4. implement fixtures support with flask-fixtures. It does not seem to support
    dump/load operations like django, see if an alternative exists.
 
 Good to know for projects

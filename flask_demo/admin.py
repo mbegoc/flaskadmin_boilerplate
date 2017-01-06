@@ -3,7 +3,7 @@ import os
 from flask import redirect, url_for, request
 from flask_user import current_user
 from flask_admin import Admin
-from flask_admin.form import rules, ImageUploadField
+from flask_admin.form import rules, ImageUploadField, SecureForm
 from flask_admin.contrib.sqla import ModelView
 from flask_admin.contrib.fileadmin import FileAdmin as BaseFileAdmin
 from flask_babelex import lazy_gettext as _
@@ -24,6 +24,7 @@ admin = Admin(
 
 class SecuredViewMixin:
     authorized_roles = tuple()
+    form_base_class = SecureForm
 
     def is_accessible(self):
         return (
