@@ -8,9 +8,10 @@ Bugs to fix
 
 1. If the user is not authorized to access resources, the page enter in an
    infinite loop
-2. flask-login seems to make user of babel to its translation, but it's
-   flask-babelex that is implemented. See if they can be used together, or
-   if we could use only one.
+2. flask-login seems to make use of babel for managing its translation, but
+   it's flask-babelex that is instanciated. See if they can be used together,
+   or if we could use only one - fixed as a contribution to the Flask-User
+   project
 
 Roadmap
 =======
@@ -32,6 +33,8 @@ Good to know for projects
 2. Flask-markdown + markdown extension in flask admin (project dependant ?)
 3. See if I could contribute to flask-admin to add a FileField linked to the
    file manager content
+4. It would be cool to have an extension which allow to route the same url
+   to a "json api" or a classical html view against the accept http field
 
 Interesting extensions
 ======================

@@ -4,3 +4,4 @@ __pycache__
 .tox
 Flask_Demo.egg-info
 media
+Flask-User
