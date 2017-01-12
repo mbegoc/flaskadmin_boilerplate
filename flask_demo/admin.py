@@ -131,11 +131,9 @@ class UserModelView(SecuredViewMixin, ModelView):
 class RoleModelView(SecuredViewMixin, ModelView):
     authorized_roles = ("admin",)
 
-    form_create_rules = (
-        "name",
-    )
-
     can_edit = False
+
+    form_excluded_columns = ["users"]
 
     column_searchable_list = [
         "name",

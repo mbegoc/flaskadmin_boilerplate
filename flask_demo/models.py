@@ -84,6 +84,9 @@ class User(db.Model, UserMixin):
         user_roles = set([r.name for r in self.roles])
         return bool(user_roles.intersection(against_roles))
 
+    def __str__(self):
+        return self.username
+
 
 class Role(db.Model):
 
