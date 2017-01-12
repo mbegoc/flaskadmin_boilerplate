@@ -6,9 +6,7 @@ Flask setup with some extension to compare with  django capabilities.
 Bugs to fix
 ===========
 
-1. If the user is not authorized to access resources, the page enter in an
-   infinite loop
-2. flask-login seems to make use of babel for managing its translation, but
+1. flask-login seems to make use of babel for managing its translation, but
    it's flask-babelex that is instanciated. See if they can be used together,
    or if we could use only one - fixed as a contribution to the Flask-User
    project
@@ -20,13 +18,12 @@ Roadmap
    at least for simple cases. See what are inline forms. It seems there is no
    way to popup a form create/edit linked items. In some cases, it could be
    necessary.
-2. Write more tests
-3. See how to manage published content - explore idea of publication table
-4. implement fixtures support with flask-fixtures. It does not seem to support
+2. Write more tests and comments
+3. implement fixtures support with flask-fixtures. It does not seem to support
    dump/load operations like django, see if an alternative exists.
 
-Good to know for projects
-=========================
+Knowledge that could be good to have for actual projects
+========================================================
 
 1. configure flask-assets to collect static files
    see if I could integrate config to manage s3
@@ -35,6 +32,7 @@ Good to know for projects
    file manager content
 4. It would be cool to have an extension which allow to route the same url
    to a "json api" or a classical html view against the accept http field
+5. See how to manage published content - explore idea of publication table
 
 Interesting extensions
 ======================

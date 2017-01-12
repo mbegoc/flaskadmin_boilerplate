@@ -34,7 +34,10 @@ class SecuredViewMixin:
         )
 
     def inaccessible_callback(self, name, **kwargs):
-        return redirect(url_for('user.login', next=request.url))
+        if current_user.is_authenticated:
+            return redirect(url_for("admin.index"))
+        else:
+            return redirect(url_for('user.login', next=request.url))
 
 
 class UserModelView(SecuredViewMixin, ModelView):
