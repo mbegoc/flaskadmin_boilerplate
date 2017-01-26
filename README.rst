@@ -21,6 +21,8 @@ Roadmap
 2. Write more tests and comments
 3. implement fixtures support with flask-fixtures. It does not seem to support
    dump/load operations like django, see if an alternative exists.
+   Implemented a custom db fixtures system instead. See if it could be
+   integrated to flask-fixtures.
 
 Knowledge that could be good to have for actual projects
 ========================================================
@@ -41,11 +43,19 @@ Interesting extensions
 2. flask-celery
 3. flask-classy
 4. flask-fillin
-5. flask-flatpages - nope
-6. flask-limiter ? (!!!)
-7. flask-upload
-8. Flask-cache
-9. Flask-fixtures
+5. flask-limiter ? (!!!)
+6. flask-upload
+7. Flask-cache
+8. flask-flatpages - nope
+9. Flask-fixtures  # gave it a try, it doesn't work with py.test + sqlite
+   it may be easy to make something custom with py.test fixtures and
+   flask-script. Maybe it could turn as a new flask-extension or a major
+   contribution to flask-fixtures.
+   Roadmap to make flask-fixtures better:
+   1. make it support py.test
+   2. make it support sqlite (as well as postgres and mysql)
+   3. implement a loaddata operation
+   4. implement a dumpdata operation
 
 How To Run The Tests
 ====================

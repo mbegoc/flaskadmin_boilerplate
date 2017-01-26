@@ -1,5 +1,6 @@
 from flask_user import UserMixin
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import PrimaryKeyConstraint
 
 
 db = SQLAlchemy()
@@ -9,6 +10,7 @@ roles_users = db.Table(
     'roles_users',
     db.Column("user_id", db.Integer(), db.ForeignKey("user.id")),
     db.Column("role_id", db.Integer(), db.ForeignKey("role.id")),
+    PrimaryKeyConstraint("user_id", "role_id")
 )
 
 
