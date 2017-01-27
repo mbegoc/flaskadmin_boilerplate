@@ -24,19 +24,27 @@ from flask_demo.models import db, User  # noqa: E402
 from flask_demo.admin import admin, media_path  # noqa: E402
 
 
+# create the app and load config
 app = Flask(__name__)
-
 app.config.from_pyfile("config/default.cfg")
 app.config.from_envvar("ENV_CONFIG_FILE", silent=True)
 
+# enable database
 db.init_app(app)
 migrate = Migrate(app, db)
 user_db_adapter = SQLAlchemyAdapter(db, User)
 
+# activate utilities extensions
 mail = Mail(app)
 user_manager = UserManager(user_db_adapter, app)
 admin.init_app(app)
 
+# prepare assats to be served
+assets = FlaskAssets(app)
+assets.register("css", app.config.get("CSS_BUNDLE"))
+# assets.register("js", app.config.get("JS_BUNDLE"))
+
+# instanciate script manager and register commands
 manager = Manager(app)
 manager.add_command('db', MigrateCommand)
 manager.add_command("runserver", Server(
@@ -44,10 +52,7 @@ manager.add_command("runserver", Server(
     port=5000,
 ))
 
-assets = FlaskAssets(app)
-assets.register("css", app.config.get("CSS_BUNDLE"))
-# assets.register("js", app.config.get("JS_BUNDLE"))
-
+# instanciate and prepare babel for translation
 babel = Babel(app)
 
 
@@ -56,6 +61,7 @@ def get_locale():
     return request.accept_languages.best_match(["fr", "en"])
 
 
+# provide a template context for flask-admin
 @app.context_processor
 def user_context_processor():
     return dict(
@@ -66,6 +72,7 @@ def user_context_processor():
     )
 
 
+# make email to be displayed to console in debug
 @email_dispatched.connect
 def log_message(message, app):
     """Provides console display for sent emails
@@ -75,6 +82,7 @@ def log_message(message, app):
         app.logger.debug("\n".join(log))
 
 
+# main route
 @app.route("/")
 def index():
     """Index endpoint that does nothing special for now but providing an entry
@@ -83,6 +91,8 @@ def index():
     return render_template("index.html")
 
 
+# serve media files (i.e. those that are uploaded though admin and are not in
+# static folder)
 @app.route("/media/<path:filename>")
 def media(filename):
     return send_from_directory(media_path, filename)

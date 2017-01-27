@@ -37,3 +37,8 @@ class TestLogin:
             "email": "email@example.com",
         })
         assert response.status_code == 302
+
+
+def test_media_endpoint(app):
+    rules = {r.endpoint: r.rule for r in app.url_map.iter_rules()}
+    assert rules.get("media").startswith("/media/")

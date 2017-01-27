@@ -11,10 +11,13 @@ from flask_babelex import lazy_gettext as _
 from flask_demo.models import db, User, Role
 
 
+# default media path is at project root. This is for demo purpose and should
+# probably be placed elsewhere in an actual project
 media_path = os.path.join(os.path.dirname(__file__), "media")
 os.makedirs(media_path, exist_ok=True)
 
 
+# initialize the flask-admin module
 admin = Admin(
     name=_("My app"),
     template_mode="bootstrap3",
@@ -23,10 +26,18 @@ admin = Admin(
 
 
 class SecuredViewMixin:
+    """This mixin provides the flask admin methods to secure admin panel. It
+    need flask-user to be installed and configured and expect a user to be
+    logged to grant access.
+    """
     authorized_roles = tuple()
     form_base_class = SecureForm
 
     def is_accessible(self):
+        """Check if user is authenticated and is allowed to access resource.
+
+        Returns a boolean
+        """
         return (
             current_user.is_authenticated and
             current_user.active and
@@ -34,6 +45,10 @@ class SecuredViewMixin:
         )
 
     def inaccessible_callback(self, name, **kwargs):
+        """View function to run if access is not granted.
+
+        Returns a Flask reponse
+        """
         if current_user.is_authenticated:
             return redirect(url_for("admin.index"))
         else:
@@ -41,10 +56,15 @@ class SecuredViewMixin:
 
 
 class UserModelView(SecuredViewMixin, ModelView):
+    """The admin view to manage users.
+    """
+    # who can access and edit users
     authorized_roles = ("admin",)
 
+    # enable the detailed read only view
     can_view_details = True
 
+    # say which field are editable in the form and the rules to edit them
     form_create_rules = (
         "active",
         "username",
@@ -55,12 +75,14 @@ class UserModelView(SecuredViewMixin, ModelView):
         "last_name",
     )
 
+    # ajax population of the roles field
     form_ajax_refs = {
         "roles": {
             "fields": ["name"],
         }
     }
 
+    # hide fields from the list view
     column_exclude_list = [
         "password",
         "reset_password_token",
@@ -69,17 +91,20 @@ class UserModelView(SecuredViewMixin, ModelView):
         "last_name",
     ]
 
+    # hidden fields from the form
     form_excluded_columns = [
         "password",
         "reset_password_token",
         "confirmed_at",
     ]
 
+    # hide fields from the read only view
     column_details_exclude_list = [
         "password",
         "reset_password_token",
     ]
 
+    # which fields to consider when searching
     column_searchable_list = [
         "username",
         "email",
@@ -87,12 +112,14 @@ class UserModelView(SecuredViewMixin, ModelView):
         "last_name",
     ]
 
+    # which columns can be filtered
     column_filters = [
         "username",
         "email",
         "roles",
     ]
 
+    # which fields are inline editable in list view
     column_editable_list = [
         "username",
         "email",
@@ -102,10 +129,12 @@ class UserModelView(SecuredViewMixin, ModelView):
         "roles",
     ]
 
+    # change the default field type for manage images on avatar
     form_overrides = {
         "avatar": ImageUploadField,
     }
 
+    # set translated labels for fields
     column_labels = {
         "active": _("Active"),
         "username": _("Username"),
@@ -116,6 +145,7 @@ class UserModelView(SecuredViewMixin, ModelView):
         "confirmed_at": _("Confirmed At"),
     }
 
+    # args to pass to the avatar field
     form_args = {
         "avatar": {
             "base_path": media_path,
@@ -124,6 +154,7 @@ class UserModelView(SecuredViewMixin, ModelView):
         },
     }
 
+    # fix a “bug” that make checkboxes as big as text fields
     form_widget_args = {
         "active": {
             "class": "",
@@ -132,12 +163,19 @@ class UserModelView(SecuredViewMixin, ModelView):
 
 
 class RoleModelView(SecuredViewMixin, ModelView):
+    """The admin view to edit roles
+    """
+    # who can edit roles
     authorized_roles = ("admin",)
 
+    # disable form (edition is made through list view)
     can_edit = False
 
+    # we can't add users to a role. Roles can only be given to a user.
     form_excluded_columns = ["users"]
 
+    # the name is the only meaningful field, it's the only one that is
+    # accessible
     column_searchable_list = [
         "name",
     ]
@@ -156,9 +194,12 @@ class RoleModelView(SecuredViewMixin, ModelView):
 
 
 class FileAdmin(SecuredViewMixin, BaseFileAdmin):
+    """Extends default FileAdmin to secure it.
+    """
     authorized_roles = ("admin", "editor")
 
 
+# register all the admin views
 admin.add_view(UserModelView(User, db.session, name=_("User")))
 admin.add_view(RoleModelView(Role, db.session, name=_("Role")))
 admin.add_view(FileAdmin(media_path, "/media/", name=_("Media files")))

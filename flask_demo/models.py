@@ -3,9 +3,13 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import PrimaryKeyConstraint
 
 
+# instanciation of the SQLAlchemy extension. It is not instialized here but
+# in the main file instead (so the app is available)
 db = SQLAlchemy()
 
 
+"""The many to many table to link users and roles
+"""
 roles_users = db.Table(
     'roles_users',
     db.Column("user_id", db.Integer(), db.ForeignKey("user.id")),
@@ -15,6 +19,9 @@ roles_users = db.Table(
 
 
 class User(db.Model, UserMixin):
+    """A user, which implements the UserMixin of Flask-User so it can be used
+    to log in.
+    """
     id = db.Column(
         db.Integer,
         primary_key=True
@@ -82,6 +89,11 @@ class User(db.Model, UserMixin):
     )
 
     def has_role(self, roles):
+        """Use to check if access is granted to user against a list of valid
+        role names.
+
+        Returns a boolean
+        """
         against_roles = set(roles)
         user_roles = set([r.name for r in self.roles])
         return bool(user_roles.intersection(against_roles))
@@ -91,6 +103,8 @@ class User(db.Model, UserMixin):
 
 
 class Role(db.Model):
+    """A simple label that is used to grant access to resources to users.
+    """
 
     id = db.Column(
         db.Integer,

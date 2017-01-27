@@ -1,7 +1,7 @@
 Flask Admin demo
 ================
 
-Flask setup with some extension to compare with  django capabilities.
+Flask setup with some extension to compare to django capabilities.
 
 Bugs to fix
 ===========
@@ -18,11 +18,18 @@ Roadmap
    at least for simple cases. See what are inline forms. It seems there is no
    way to popup a form create/edit linked items. In some cases, it could be
    necessary.
-2. Write more tests and comments
-3. implement fixtures support with flask-fixtures. It does not seem to support
-   dump/load operations like django, see if an alternative exists.
-   Implemented a custom db fixtures system instead. See if it could be
+2. Models translations ?
+3. Write more tests and comments
+4. implement fixtures support with flask-fixtures.
+   -> It does not seem to support dump/load operations like django, see if an
+   alternative exists -> Nope.
+   -> Implemented a custom db fixtures system instead.  See if it could be
    integrated to flask-fixtures.
+5. Make tox tests work again. See if I can use py.test to check flake8
+   compliance
+6. Check the format of email (text + html) and see how to send both formats
+   if necessary since it's really important to be able to deliver email as html
+7. Generate the sphinx doc
 
 Knowledge that could be good to have for actual projects
 ========================================================
@@ -40,12 +47,12 @@ Interesting extensions
 ======================
 
 1. Flask-restful
-2. flask-celery
-3. flask-classy
 4. flask-fillin
-5. flask-limiter ? (!!!)
 6. flask-upload
-7. Flask-cache
+7. Flask-cache (optional - optimization)
+2. flask-celery (very optional)
+3. flask-classy (very optional)
+5. flask-limiter ? (!!!) (very optional AND cool)
 8. flask-flatpages - nope
 9. Flask-fixtures  # gave it a try, it doesn't work with py.test + sqlite
    it may be easy to make something custom with py.test fixtures and
